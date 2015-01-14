@@ -3,4 +3,6 @@ pkg/
 
 linux-*
 patch-*
+linux.install.pkg
+hid-synaptics.zip
 rtl8723bs.zip

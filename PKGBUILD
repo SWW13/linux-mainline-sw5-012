@@ -24,6 +24,7 @@ source=("https://www.kernel.org/pub/linux/kernel/v3.x/${_srcname}.tar.xz"
         'linux.preset'
         'change-default-console-loglevel.patch'
         'rtl8723bs.zip::https://github.com/hadess/rtl8723bs/archive/master.zip'
+        'hid-synaptics.zip::https://github.com/SWW13/hid-synaptics/archive/master.zip'
         )
 
 sha256sums=('becc413cc9e6d7f5cc52a3ce66d65c3725bc1d1cc1001f4ce6c32b69eb188cbd'
@@ -32,7 +33,8 @@ sha256sums=('becc413cc9e6d7f5cc52a3ce66d65c3725bc1d1cc1001f4ce6c32b69eb188cbd'
             'df7886f5d57f8f85e89987066dfa5c316e922dc0b22e6e6ad01331333db52377'
             'f0d90e756f14533ee67afda280500511a62465b4f76adcc5effa95a40045179c'
             '1256b241cd477b265a3c2d64bdc19ffe3c9bbcee82ea3994c590c2c76e767d99'
-            'e8f82303ef93fe06805313f307229ce9ff580011b0838aadc2709e7a83bfbc40')
+            'e8f82303ef93fe06805313f307229ce9ff580011b0838aadc2709e7a83bfbc40'
+            'c099788b8f89e7025bbd17e4ff73d21212b8a062bec0f36efa9c26157f83e0c1')
 validpgpkeys=(
               'ABAF11C65A2970B130ABE3C479BE3E4300411886' # Linux Torvalds
               '647F28654894E3BD457199BE38DBBDC86092693E' # Greg Kroah-Hartman
@@ -59,15 +61,18 @@ prepare() {
   # (relevant patch sent upstream: https://lkml.org/lkml/2011/7/26/227)
   patch -p1 -i "${srcdir}/change-default-console-loglevel.patch"
   
-  # add modules
+  # add wifi module
   rm -Rf drivers/net/wireless/rtl8723bs
   mv "${srcdir}/rtl8723bs-master" drivers/net/wireless/rtl8723bs
   echo 'obj-$(CONFIG_RTL8723AS)	+= rtl8723bs/' >> drivers/net/wireless/Makefile
   echo 'obj-$(CONFIG_RTL8723BS)	+= rtl8723bs/' >> drivers/net/wireless/Makefile
   echo 'source "drivers/net/wireless/rtl8723bs/Kconfig"' >> drivers/net/wireless/Kconfig
   
-  # kerboard fix
-  sed 's/#define HID_MAX_USAGES\t\t\t12288/#define HID_MAX_USAGES\t\t\t64000/' -i include/linux/hid.h
+  # add keyboard fix module
+  rm -Rf drivers/hid/hid-synaptics
+  mv "${srcdir}/hid-synaptics-master" drivers/hid/hid-synaptics
+  echo 'obj-$(CONFIG_HID_SYNAPTICS)	+= hid-synaptics/' >> drivers/hid/Makefile
+  echo 'source "drivers/hid/hid-synaptics/Kconfig"' >> drivers/hid/Kconfig
 
   if [ "${CARCH}" = "x86_64" ]; then
     cat "${srcdir}/config.x86_64" > ./.config
@@ -98,22 +103,23 @@ prepare() {
   # enable modules
   set_kconfig "CONFIG_RTL8723BS" "m"
   set_kconfig "CONFIG_WLAN_SDIO" "y"
+  set_kconfig "CONFIG_HID_SYNAPTICS" "m"
 
   # enable gpio
-  set_kconfig "CONFIG_KEYBOARD_GPIO" "m"
-  set_kconfig "CONFIG_KEYBOARD_GPIO_POLLED" "m"
-  set_kconfig "CONFIG_INPUT_GPIO_TILT_POLLED" "m"
+  #set_kconfig "CONFIG_KEYBOARD_GPIO" "m"
+  #set_kconfig "CONFIG_KEYBOARD_GPIO_POLLED" "m"
+  #set_kconfig "CONFIG_INPUT_GPIO_TILT_POLLED" "m"
 
   # enable SoC functions
-  set_kconfig "CONFIG_INTEL_SOC_PMIC" "y"
-  set_kconfig "CONFIG_INTEL_SOC_DTS_THERMAL" "m"
-  set_kconfig "CONFIG_INPUT_SOC_BUTTON_ARRAY" "m"
-  set_kconfig "CONFIG_SND_SOC" "m"
-  set_kconfig "CONFIG_SND_SOC_INTEL_SST" "m"
-  set_kconfig "CONFIG_SND_SOC_INTEL_SST_ACPI" "m"
-  set_kconfig "SND_SOC_INTEL_SST" "m"
-  set_kconfig "SND_SOC_INTEL_BYT_RT5640_MACH" "m"
-  set_kconfig "SND_SOC_INTEL_BYT_MAX98090_MACH" "m"
+  #set_kconfig "CONFIG_INTEL_SOC_PMIC" "y"
+  #set_kconfig "CONFIG_INTEL_SOC_DTS_THERMAL" "m"
+  #set_kconfig "CONFIG_INPUT_SOC_BUTTON_ARRAY" "m"
+  #set_kconfig "CONFIG_SND_SOC" "m"
+  #set_kconfig "CONFIG_SND_SOC_INTEL_SST" "m"
+  #set_kconfig "CONFIG_SND_SOC_INTEL_SST_ACPI" "m"
+  #set_kconfig "SND_SOC_INTEL_SST" "m"
+  #set_kconfig "SND_SOC_INTEL_BYT_RT5640_MACH" "m"
+  #set_kconfig "SND_SOC_INTEL_BYT_MAX98090_MACH" "m"
   
 
   # get kernel version
