@@ -67,7 +67,7 @@ prepare() {
   echo 'source "drivers/net/wireless/rtl8723bs/Kconfig"' >> drivers/net/wireless/Kconfig
   
   # kerboard fix
-  sed 's/#define HID_MAX_USAGES\t\t\t12288/#define HID_MAX_USAGES\t\t\t64000/' -i linux-3.18/include/linux/hid.h
+  sed 's/#define HID_MAX_USAGES\t\t\t12288/#define HID_MAX_USAGES\t\t\t64000/' -i include/linux/hid.h
 
   if [ "${CARCH}" = "x86_64" ]; then
     cat "${srcdir}/config.x86_64" > ./.config
