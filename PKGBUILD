@@ -6,9 +6,9 @@
 #pkgbase=linux-custom       # Build kernel with a different name
 pkgbase=linux-sw5-012
 _srcname=linux-3.18
-_patchname=patch-3.19-rc4
-pkgver=3.19rc4
-pkgrel=2
+_patchname=patch-3.19-rc5
+pkgver=3.19rc5
+pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
@@ -16,25 +16,23 @@ makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc')
 options=('!strip')
 source=("https://www.kernel.org/pub/linux/kernel/v3.x/${_srcname}.tar.xz"
         "https://www.kernel.org/pub/linux/kernel/v3.x/testing/${_patchname}.xz"
-        #"https://www.kernel.org/pub/linux/kernel/v3.x/${_srcname}.tar.sign"
-        #"https://www.kernel.org/pub/linux/kernel/v3.x/testing/${_patchname}.sign"
         # the main kernel config files
         'config' 'config.x86_64'
         # standard config files for mkinitcpio ramdisk
         'linux.preset'
         'change-default-console-loglevel.patch'
         'rtl8723bs.zip::https://github.com/hadess/rtl8723bs/archive/master.zip'
-        'hid-synaptics.zip::https://github.com/SWW13/hid-synaptics/archive/master.zip'
+        '0001-added-synaptics-keybaord-fix.patch::https://gist.githubusercontent.com/SWW13/4dc4924ebebf2e1a28d9/raw/76572c574a65858f48aaa4fdb2f19bdc5f7a469f/gistfile1.txt'
         )
 
 sha256sums=('becc413cc9e6d7f5cc52a3ce66d65c3725bc1d1cc1001f4ce6c32b69eb188cbd'
-            'dab3b0ea8caff16ebc68380e88ad09b79a61a3bf291c1bbf116b55b06ac35273'
+            'a77dc24e149f0f90fa2b34508b40ed5d725a8f5690ea6873bb8641e2c0642623'
             'd3794c8b2cd11b71914b41f7a4e861369d4fa3c29fdd9e1d677ff0c2167eeb52'
             'df7886f5d57f8f85e89987066dfa5c316e922dc0b22e6e6ad01331333db52377'
             'f0d90e756f14533ee67afda280500511a62465b4f76adcc5effa95a40045179c'
             '1256b241cd477b265a3c2d64bdc19ffe3c9bbcee82ea3994c590c2c76e767d99'
             'e8f82303ef93fe06805313f307229ce9ff580011b0838aadc2709e7a83bfbc40'
-            'c099788b8f89e7025bbd17e4ff73d21212b8a062bec0f36efa9c26157f83e0c1')
+            '371f115e6fca2c9ca5ab267d0ab060ca8491ecabcf9433147ca5c664d20341e9')
 validpgpkeys=(
               'ABAF11C65A2970B130ABE3C479BE3E4300411886' # Linux Torvalds
               '647F28654894E3BD457199BE38DBBDC86092693E' # Greg Kroah-Hartman
@@ -59,7 +57,10 @@ prepare() {
   # set DEFAULT_CONSOLE_LOGLEVEL to 4 (same value as the 'quiet' kernel param)
   # remove this when a Kconfig knob is made available by upstream
   # (relevant patch sent upstream: https://lkml.org/lkml/2011/7/26/227)
-  patch -p1 -i "${srcdir}/change-default-console-loglevel.patch"
+  patch -p1 -i "change-default-console-loglevel.patch"
+  
+  # patch keyboard driver
+  patch -p1 -i "${srcdir}/0001-added-synaptics-keybaord-fix.patch"
   
   # add wifi module
   rm -Rf drivers/net/wireless/rtl8723bs
@@ -68,12 +69,6 @@ prepare() {
   echo 'obj-$(CONFIG_RTL8723BS)	+= rtl8723bs/' >> drivers/net/wireless/Makefile
   echo 'source "drivers/net/wireless/rtl8723bs/Kconfig"' >> drivers/net/wireless/Kconfig
   
-  # add keyboard fix module
-  rm -Rf drivers/hid/hid-synaptics
-  mv "${srcdir}/hid-synaptics-master" drivers/hid/hid-synaptics
-  echo 'obj-$(CONFIG_HID_SYNAPTICS)	+= hid-synaptics/' >> drivers/hid/Makefile
-  echo 'source "drivers/hid/hid-synaptics/Kconfig"' >> drivers/hid/Kconfig
-
   if [ "${CARCH}" = "x86_64" ]; then
     cat "${srcdir}/config.x86_64" > ./.config
   else
@@ -101,9 +96,9 @@ prepare() {
   # ... or manually edit .config
 
   # enable modules
+  set_kconfig "CONFIG_HID_SYNAPTICS" "y"
   set_kconfig "CONFIG_RTL8723BS" "m"
   set_kconfig "CONFIG_WLAN_SDIO" "y"
-  set_kconfig "CONFIG_HID_SYNAPTICS" "m"
 
   # enable gpio
   #set_kconfig "CONFIG_KEYBOARD_GPIO" "m"

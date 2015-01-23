@@ -4,5 +4,5 @@ pkg/
 linux-*
 patch-*
 linux.install.pkg
-hid-synaptics.zip
+0001-added-synaptics-keybaord-fix.patch
 rtl8723bs.zip
