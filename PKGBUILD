@@ -22,7 +22,7 @@ source=("https://www.kernel.org/pub/linux/kernel/v3.x/${_srcname}.tar.xz"
         'linux.preset'
         'change-default-console-loglevel.patch'
         'rtl8723bs.zip::https://github.com/hadess/rtl8723bs/archive/master.zip'
-        '0001-added-synaptics-keybaord-fix.patch::https://gist.githubusercontent.com/SWW13/4dc4924ebebf2e1a28d9/raw/76572c574a65858f48aaa4fdb2f19bdc5f7a469f/gistfile1.txt'
+        '0001-HID-Add-driver-for-acer-keybard-with-broken-rdesc.patch::https://gist.githubusercontent.com/SWW13/607149459da39493728c/raw/8db31266d1872f3e06f3a5248f78fec474641880/0001-HID-Add-driver-for-acer-keybard-with-broken-rdesc.patch'
         )
 
 sha256sums=('becc413cc9e6d7f5cc52a3ce66d65c3725bc1d1cc1001f4ce6c32b69eb188cbd'
@@ -32,7 +32,7 @@ sha256sums=('becc413cc9e6d7f5cc52a3ce66d65c3725bc1d1cc1001f4ce6c32b69eb188cbd'
             'f0d90e756f14533ee67afda280500511a62465b4f76adcc5effa95a40045179c'
             '1256b241cd477b265a3c2d64bdc19ffe3c9bbcee82ea3994c590c2c76e767d99'
             'e8f82303ef93fe06805313f307229ce9ff580011b0838aadc2709e7a83bfbc40'
-            '371f115e6fca2c9ca5ab267d0ab060ca8491ecabcf9433147ca5c664d20341e9')
+            'aafcd4dde6c95ba4f484163d95745dea005c8929ff47a3cb82b43cef0517126f')
 validpgpkeys=(
               'ABAF11C65A2970B130ABE3C479BE3E4300411886' # Linux Torvalds
               '647F28654894E3BD457199BE38DBBDC86092693E' # Greg Kroah-Hartman
@@ -60,7 +60,7 @@ prepare() {
   patch -p1 -i "${srcdir}/change-default-console-loglevel.patch"
   
   # patch keyboard driver
-  patch -p1 -i "${srcdir}/0001-added-synaptics-keybaord-fix.patch"
+  patch -p1 -i "${srcdir}/0001-HID-Add-driver-for-acer-keybard-with-broken-rdesc.patch"
   
   # add wifi module
   rm -Rf drivers/net/wireless/rtl8723bs
@@ -96,7 +96,7 @@ prepare() {
   # ... or manually edit .config
 
   # enable modules
-  set_kconfig "CONFIG_HID_SYNAPTICS" "y"
+  set_kconfig "CONFIG_HID_ACER" "y"
   set_kconfig "CONFIG_RTL8723BS" "m"
   set_kconfig "CONFIG_WLAN_SDIO" "y"
 
@@ -112,9 +112,9 @@ prepare() {
   #set_kconfig "CONFIG_SND_SOC" "m"
   #set_kconfig "CONFIG_SND_SOC_INTEL_SST" "m"
   #set_kconfig "CONFIG_SND_SOC_INTEL_SST_ACPI" "m"
-  #set_kconfig "SND_SOC_INTEL_SST" "m"
-  #set_kconfig "SND_SOC_INTEL_BYT_RT5640_MACH" "m"
-  #set_kconfig "SND_SOC_INTEL_BYT_MAX98090_MACH" "m"
+  #set_kconfig "CONFIG_SND_SOC_INTEL_SST" "m"
+  #set_kconfig "CONFIG_SND_SOC_INTEL_BYT_RT5640_MACH" "m"
+  #set_kconfig "CONFIG_SND_SOC_INTEL_BYT_MAX98090_MACH" "m"
   
 
   # get kernel version

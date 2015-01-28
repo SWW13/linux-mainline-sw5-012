@@ -4,5 +4,5 @@ pkg/
 linux-*
 patch-*
 linux.install.pkg
-0001-added-synaptics-keybaord-fix.patch
+0001-HID-Add-driver-for-acer-keybard-with-broken-rdesc.patch
 rtl8723bs.zip
