@@ -5,17 +5,17 @@
 #pkgbase=linux-mainline               # Build stock -ARCH kernel
 #pkgbase=linux-custom       # Build kernel with a different name
 pkgbase=linux-sw5-012
-_srcname=linux-3.18
-_patchname=patch-3.19-rc5
-pkgver=3.19rc5
-pkgrel=3
+_srcname=linux-4.0-rc7
+#_patchname=patch-3.9-rc5
+pkgver=4.0rc7
+pkgrel=1
 arch=('i686' 'x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc')
 options=('!strip')
-source=("https://www.kernel.org/pub/linux/kernel/v3.x/${_srcname}.tar.xz"
-        "https://www.kernel.org/pub/linux/kernel/v3.x/testing/${_patchname}.xz"
+source=("https://www.kernel.org/pub/linux/kernel/v4.x/testing/${_srcname}.tar.xz"
+        #"https://www.kernel.org/pub/linux/kernel/v3.x/testing/${_patchname}.xz"
         # the main kernel config files
         'config' 'config.x86_64'
         # standard config files for mkinitcpio ramdisk
@@ -25,13 +25,12 @@ source=("https://www.kernel.org/pub/linux/kernel/v3.x/${_srcname}.tar.xz"
         '0001-HID-Add-driver-for-acer-keybard-with-broken-rdesc.patch::https://gist.githubusercontent.com/SWW13/607149459da39493728c/raw/b08b60ed878d32019d573361cc836a17b3cc8ebc/0001-HID-Add-driver-for-acer-keybard-with-broken-rdesc.patch'
         )
 
-sha256sums=('becc413cc9e6d7f5cc52a3ce66d65c3725bc1d1cc1001f4ce6c32b69eb188cbd'
-            'a77dc24e149f0f90fa2b34508b40ed5d725a8f5690ea6873bb8641e2c0642623'
+sha256sums=('71e2e7fca435e747e58dcecbb34933c48b677b6a1a2d04dc3b58e9fa09b9c188'
             'd3794c8b2cd11b71914b41f7a4e861369d4fa3c29fdd9e1d677ff0c2167eeb52'
             'df7886f5d57f8f85e89987066dfa5c316e922dc0b22e6e6ad01331333db52377'
             'f0d90e756f14533ee67afda280500511a62465b4f76adcc5effa95a40045179c'
             '1256b241cd477b265a3c2d64bdc19ffe3c9bbcee82ea3994c590c2c76e767d99'
-            'e8f82303ef93fe06805313f307229ce9ff580011b0838aadc2709e7a83bfbc40'
+            'ed609c67a44c223e8419117709264ce29a72d3726b09c1613427a85670898ecd'
             'eed7fb21a81c4d611d52dc361a831b42d6a61ee6c2afea90e5c60da158c6e751')
 validpgpkeys=(
               'ABAF11C65A2970B130ABE3C479BE3E4300411886' # Linux Torvalds
@@ -52,7 +51,7 @@ prepare() {
   # add latest fixes from stable queue, if needed
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
 
-  # patch -p1 -i "${srcdir}/${_patchname}"
+  #patch -p1 -i "${srcdir}/${_patchname}"
   # workaround for https://bugzilla.redhat.com/show_bug.cgi?id=1185928
   git apply "${srcdir}/${_patchname}"
 
