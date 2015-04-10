@@ -51,9 +51,9 @@ prepare() {
   # add latest fixes from stable queue, if needed
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
 
-  #patch -p1 -i "${srcdir}/${_patchname}"
+  # patch -p1 -i "${srcdir}/${_patchname}"
   # workaround for https://bugzilla.redhat.com/show_bug.cgi?id=1185928
-  git apply "${srcdir}/${_patchname}"
+  # git apply "${srcdir}/${_patchname}"
 
   # set DEFAULT_CONSOLE_LOGLEVEL to 4 (same value as the 'quiet' kernel param)
   # remove this when a Kconfig knob is made available by upstream
@@ -117,6 +117,12 @@ prepare() {
   #set_kconfig "CONFIG_SND_SOC_INTEL_BYT_RT5640_MACH" "m"
   #set_kconfig "CONFIG_SND_SOC_INTEL_BYT_MAX98090_MACH" "m"
   
+  set_kconfig "CONFIG_X86_INTEL_LPSS" "y"
+  set_kconfig "CONFIG_PINMUX" "y"
+  set_kconfig "CONFIG_PINCONF" "y"
+  set_kconfig "CONFIG_PINCTRL_BAYTRAIL" "y"
+  set_kconfig "CONFIG_I2C" "y"
+  set_kconfig "CONFIG_ACPI_I2C_OPREGION" "y "
 
   # get kernel version
   make prepare
