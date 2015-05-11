@@ -22,7 +22,7 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         'linux.preset'
         'change-default-console-loglevel.patch'
         'rtl8723bs.zip::https://github.com/hadess/rtl8723bs/archive/master.zip'
-        '0001-HID-Add-driver-for-acer-keybard-with-broken-rdesc.patch::https://gist.githubusercontent.com/SWW13/607149459da39493728c/raw/31b21555a4512aed0e69a491c8b2765817c0006c/0001-HID-Add-driver-for-acer-keybard-with-broken-rdesc.patch'
+        '0001-HID-Add-driver-for-acer-keybard-with-broken-rdesc.patch::https://gist.githubusercontent.com/SWW13/607149459da39493728c/raw/a270cce7a1283fed03d0ba873121ad62f57e693c/0001-HID-Add-driver-for-acer-keybard-with-broken-rdesc.patch'
         )
 
 sha256sums=('0f2f7d44979bc8f71c4fc5d3308c03499c26a824dd311fdf6eef4dee0d7d5991'
