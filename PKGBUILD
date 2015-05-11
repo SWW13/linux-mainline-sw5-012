@@ -32,7 +32,7 @@ sha256sums=('0f2f7d44979bc8f71c4fc5d3308c03499c26a824dd311fdf6eef4dee0d7d5991'
             'f0d90e756f14533ee67afda280500511a62465b4f76adcc5effa95a40045179c'
             '1256b241cd477b265a3c2d64bdc19ffe3c9bbcee82ea3994c590c2c76e767d99'
             '18c20f2dadc347c902b16934501ef2a35fedd6dffc433aaf7730658c3d858255'
-            'bb7b79b56e5029fe86b52b7ab0dea2944dbcbd9eff2ad39f56a1ede7b203741e')
+            '0d23e44112b576d82b93b666e766cadc9671fad52c9e5eb8abd19e3f108c9dfd')
 validpgpkeys=(
               'ABAF11C65A2970B130ABE3C479BE3E4300411886' # Linux Torvalds
               '647F28654894E3BD457199BE38DBBDC86092693E' # Greg Kroah-Hartman
