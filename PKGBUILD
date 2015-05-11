@@ -5,24 +5,24 @@
 #pkgbase=linux-mainline               # Build stock -ARCH kernel
 #pkgbase=linux-custom       # Build kernel with a different name
 pkgbase=linux-sw5-012
-_srcname=linux-4.0-rc7
-#_patchname=patch-3.9-rc5
-pkgver=4.0rc7
+_srcname=linux-4.0
+_patchname=patch-4.1-rc3
+pkgver=4.1rc3
 pkgrel=1
 arch=('i686' 'x86_64')
-url="http://www.kernel.org/"
+url="http://www.hurrdurr.org/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc')
 options=('!strip')
-source=("https://www.kernel.org/pub/linux/kernel/v4.x/testing/${_srcname}.tar.xz"
-        #"https://www.kernel.org/pub/linux/kernel/v3.x/testing/${_patchname}.xz"
+source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
+        "https://www.kernel.org/pub/linux/kernel/v4.x/testing/${_patchname}.xz"
         # the main kernel config files
         'config' 'config.x86_64'
         # standard config files for mkinitcpio ramdisk
         'linux.preset'
         'change-default-console-loglevel.patch'
         'rtl8723bs.zip::https://github.com/hadess/rtl8723bs/archive/master.zip'
-        '0001-HID-Add-driver-for-acer-keybard-with-broken-rdesc.patch::https://gist.githubusercontent.com/SWW13/607149459da39493728c/raw/b08b60ed878d32019d573361cc836a17b3cc8ebc/0001-HID-Add-driver-for-acer-keybard-with-broken-rdesc.patch'
+        '0001-HID-Add-driver-for-acer-keybard-with-broken-rdesc.patch::https://gist.githubusercontent.com/SWW13/607149459da39493728c/raw/31b21555a4512aed0e69a491c8b2765817c0006c/0001-HID-Add-driver-for-acer-keybard-with-broken-rdesc.patch'
         )
 
 sha256sums=('71e2e7fca435e747e58dcecbb34933c48b677b6a1a2d04dc3b58e9fa09b9c188'
@@ -51,7 +51,7 @@ prepare() {
   # add latest fixes from stable queue, if needed
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
 
-  # patch -p1 -i "${srcdir}/${_patchname}"
+  patch -p1 -i "${srcdir}/${_patchname}"
   # workaround for https://bugzilla.redhat.com/show_bug.cgi?id=1185928
   # git apply "${srcdir}/${_patchname}"
 
@@ -117,12 +117,12 @@ prepare() {
   #set_kconfig "CONFIG_SND_SOC_INTEL_BYT_RT5640_MACH" "m"
   #set_kconfig "CONFIG_SND_SOC_INTEL_BYT_MAX98090_MACH" "m"
   
-  set_kconfig "CONFIG_X86_INTEL_LPSS" "y"
-  set_kconfig "CONFIG_PINMUX" "y"
-  set_kconfig "CONFIG_PINCONF" "y"
-  set_kconfig "CONFIG_PINCTRL_BAYTRAIL" "y"
-  set_kconfig "CONFIG_I2C" "y"
-  set_kconfig "CONFIG_ACPI_I2C_OPREGION" "y "
+  #set_kconfig "CONFIG_X86_INTEL_LPSS" "y"
+  #set_kconfig "CONFIG_PINMUX" "y"
+  #set_kconfig "CONFIG_PINCONF" "y"
+  #set_kconfig "CONFIG_PINCTRL_BAYTRAIL" "y"
+  #set_kconfig "CONFIG_I2C" "y"
+  #set_kconfig "CONFIG_ACPI_I2C_OPREGION" "y "
 
   # get kernel version
   make prepare
