@@ -25,13 +25,14 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         '0001-HID-Add-driver-for-acer-keybard-with-broken-rdesc.patch::https://gist.githubusercontent.com/SWW13/607149459da39493728c/raw/31b21555a4512aed0e69a491c8b2765817c0006c/0001-HID-Add-driver-for-acer-keybard-with-broken-rdesc.patch'
         )
 
-sha256sums=('71e2e7fca435e747e58dcecbb34933c48b677b6a1a2d04dc3b58e9fa09b9c188'
+sha256sums=('0f2f7d44979bc8f71c4fc5d3308c03499c26a824dd311fdf6eef4dee0d7d5991'
+            '0f6ed001abfa0ca5a8fc6fa4c6d65adbba2423b0242fb8c9e50e078ca417e88c'
             'd3794c8b2cd11b71914b41f7a4e861369d4fa3c29fdd9e1d677ff0c2167eeb52'
             'df7886f5d57f8f85e89987066dfa5c316e922dc0b22e6e6ad01331333db52377'
             'f0d90e756f14533ee67afda280500511a62465b4f76adcc5effa95a40045179c'
             '1256b241cd477b265a3c2d64bdc19ffe3c9bbcee82ea3994c590c2c76e767d99'
-            'ed609c67a44c223e8419117709264ce29a72d3726b09c1613427a85670898ecd'
-            'eed7fb21a81c4d611d52dc361a831b42d6a61ee6c2afea90e5c60da158c6e751')
+            '18c20f2dadc347c902b16934501ef2a35fedd6dffc433aaf7730658c3d858255'
+            'bb7b79b56e5029fe86b52b7ab0dea2944dbcbd9eff2ad39f56a1ede7b203741e')
 validpgpkeys=(
               'ABAF11C65A2970B130ABE3C479BE3E4300411886' # Linux Torvalds
               '647F28654894E3BD457199BE38DBBDC86092693E' # Greg Kroah-Hartman
